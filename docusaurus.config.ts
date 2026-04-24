@@ -68,15 +68,9 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          href: 'https://github.com/Xerillia/tournament-manager',
+          label: 'Project Repository',
           position: 'left',
-          label: 'Tutorial',
-        },
-        {
-          href: 'https://github.com/xerillia/xerillia.github.io',
-          label: 'GitHub',
-          position: 'right',
         },
       ],
     },
