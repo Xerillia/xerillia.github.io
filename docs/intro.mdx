@@ -25,12 +25,12 @@ You may use Laragon, XAMPP, or anything you like.
 2. [Clone the repository](#cloning-repository) inside the `../www` folder.
 3. [Install the dependencies](#installing-dependencies).
 4. [Configure the .env file](#creating-env).
-5. [Setup OAuths](#oauth-setups)
+5. [Setup OAuths](#oauth-setups).
 6. [Run the migrations](#database-migrations).
 7. Have the [dev environment running](#development-environment) (recommended) or [app built](#building-application).
 8. Run the `laragon.exe`.
 9. Click on `Start All`.
-10. Open `http://{project_name}.test/` e.g. `http://project-manager.test/`
+10. Open `http://{project_name}.test/` e.g. http://project-manager.test/
 
 ### XAMPP
 
@@ -66,7 +66,7 @@ If the button to `Run as administrator` did not appear, do these steps:
 </details>
 5. [Install the dependencies](#installing-dependencies).
 6. [Configure the .env file](#creating-env).
-7. [Setup OAuths](#oauth-setups)
+7. [Setup OAuths](#oauth-setups).
 8. [Run the migrations](#database-migrations).
 9. Have the [dev environment running](#development-environment) (recommended) or [app built](#building-application).
 10. Run the `XAMPP Control Panel` as administrator.
@@ -75,7 +75,7 @@ If the button to `Run as administrator` did not appear, do these steps:
     right clicking the shortcut -> Properties -> Advanced -> check Run as administrator.
     :::
 11. Start both `Apache` and `MySQL`. These can be set to autostart in Config.
-12. Open `http://tournament-manager.test
+12. Open http://tournament-manager.test
 
 ## Project setup
 
@@ -119,7 +119,7 @@ Ensure you are in the project folder, e.g. `../tournament-manager`.
 1. Open the [osu! account settings](https://osu.ppy.sh/home/account/edit) page and scroll down to the `OAuth` section.
 2. Click on `New OAuth Application`.
 3. Set the `Application Name` to anything you want.
-4. Set the `Application Callback URLs` to `{APP_URL}/osu/callback`, e.g. `http://project-manager.test/osu/callback`.
+4. Set the `Application Callback URLs` to `{APP_URL}/osu/callback`, e.g. http://project-manager.test/osu/callback.
     :::info
     The URI path must be `/osu/callback`.
     :::
@@ -135,7 +135,7 @@ Ensure you are in the project folder, e.g. `../tournament-manager`.
 2. Click on `New Application`.
 3. Set the `Name` to anything you want, then create the app.
 4. Navigate to the `OAuth2` tab through the sidebar on the left.
-5. Click on `Add Redirect` then set it to `{APP_URL}/discord/callback`, e.g. `https://project.manager-test/osu/callback`.
+5. Click on `Add Redirect` then set it to `{APP_URL}/discord/callback`, e.g. https://project.manager-test/osu/callback.
     :::info
     The URI path must be `/discord/callback`.
     :::
