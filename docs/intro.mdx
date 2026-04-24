@@ -3,46 +3,173 @@ sidebar_position: 1
 slug: /
 ---
 
-# Tutorial Intro
+# Setting Up
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Follow these steps to run the project in your local environment and start contributing.
 
-## Getting Started
+## Prerequisite
 
-Get started by **creating a new site**.
+All of these must be done before anything:
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- [Install git](https://git-scm.com/install/windows).
+- [Install Composer](https://getcomposer.org/download/).
+- [Install Node.js](https://nodejs.org/en/download).
 
-### What you'll need
+## Local web server setup
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+You may use Laragon, XAMPP, or anything you like.
 
-## Generate a new site
+### Laragon
 
-Generate a new Docusaurus site using the **classic template**.
+1. [Install laragon](https://laragon.org/download).
+2. [Clone the repository](#cloning-repository) inside the `../www` folder.
+3. [Install the dependencies](#installing-dependencies).
+4. [Configure the .env file](#creating-env).
+5. [Setup OAuths](#oauth-setups)
+6. [Run the migrations](#database-migrations).
+7. Have the [dev environment running](#development-environment) (recommended) or [app built](#building-application).
+8. Run the `laragon.exe`.
+9. Click on `Start All`.
+10. Open `http://{project_name}.test/` e.g. `http://project-manager.test/`
 
-The classic template will automatically be added to your project after you run the command:
+### XAMPP
+
+1. [Install XAMPP](https://www.apachefriends.org/).
+2. [Clone the repository](#cloning-repository) inside the `../htdocs` folder.
+3. Navigate to `../apache/conf/extra` and edit the `httpd-vhosts.conf` file with a text editor, and add the code snippet below with your own `project_name` and path:
+    ```markup
+    <VirtualHost *:80>
+        # highlight-start
+        DocumentRoot "C:/XAMPP/htdocs/tournament-manager/public"
+        # highlight-end
+        ServerName http://tournament-manager.test/
+        # highlight-start
+        <Directory "C:/XAMPP/htdocs/tournament-manager/public">
+        # highlight-end
+            AllowOverride All
+            Require all granted
+        </Directory>
+    </VirtualHost>
+    ```
+4. Navigate to `C:/Windows/System32/drivers/etc/` and open the `hosts` file as administrator, then add this line:
+    ```markdown
+    127.0.0.1 tournament-manager.test
+    ```
+<details>
+<summary>How to open `hosts` file as administrator</summary>
+
+If the button to `Run as administrator` did not appear, do these steps:
+1. Open your text editor as administrator.
+2. Click on `File -> Open`.
+3. Navigate to the `C:/Windows/System32/drivers/etc/`.
+4. Open `hosts`.
+</details>
+5. [Install the dependencies](#installing-dependencies).
+6. [Configure the .env file](#creating-env).
+7. [Setup OAuths](#oauth-setups)
+8. [Run the migrations](#database-migrations).
+9. Have the [dev environment running](#development-environment) (recommended) or [app built](#building-application).
+10. Run the `XAMPP Control Panel` as administrator.
+    :::tip
+    You can set the shortcut to always run as administrator by <br />
+    right clicking the shortcut -> Properties -> Advanced -> check Run as administrator.
+    :::
+11. Start both `Apache` and `MySQL`. These can be set to autostart in Config.
+12. Open `http://tournament-manager.test
+
+## Project setup
+
+### Cloning repository
+
+Run these commands in a terminal of your choice.
 
 ```bash
-npm init docusaurus@latest my-website classic
+git clone https://github.com/Xerillia/tournament-manager.git
+cd tournament-manager
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+### Installing dependencies
 
 ```bash
-cd my-website
-npm run start
+composer install
+npm install
+```
+:::note
+Ensure you are in the project folder, e.g. `../tournament-manager`.
+:::
+
+### Creating `.env`
+
+1. Duplicate the `.env.example` file in the project folder and rename it to `.env`
+2. Generate an `APP_KEY` by running this command:
+    ```bash
+    php artisan key:Generate
+    ```
+3. Set the `APP_URL` field accordingly.
+4. Set the `DB_CONNECTION` field and its configuration.
+    :::danger
+    Do not use `sqlite` because it will not work.
+    :::
+5. Setup the OAuth APIs by following the sections below:
+
+### OAuth setups
+
+#### osu!
+
+1. Open the [osu! account settings](https://osu.ppy.sh/home/account/edit) page and scroll down to the `OAuth` section.
+2. Click on `New OAuth Application`.
+3. Set the `Application Name` to anything you want.
+4. Set the `Application Callback URLs` to `{APP_URL}/osu/callback`, e.g. `http://project-manager.test/osu/callback`.
+    :::info
+    The URI path must be `/osu/callback`.
+    :::
+5. Click on `Register application`.
+6. Click on `Edit` from the newly made application.
+7. Copy the value under `Client ID` and paste it to the `OSU_CLIENT_ID` field in the `.env` file.
+8. Click on `Show client secret`, then copy the value under `Client Secret`, and paste it to the `OSU_CLIENT_SECRET` field.
+9. Done.
+
+#### Discord
+
+1. Open the [Discord Developer Portal](https://discord.com/developers/applications) page.
+2. Click on `New Application`.
+3. Set the `Name` to anything you want, then create the app.
+4. Navigate to the `OAuth2` tab through the sidebar on the left.
+5. Click on `Add Redirect` then set it to `{APP_URL}/discord/callback`, e.g. `https://project.manager-test/osu/callback`.
+    :::info
+    The URI path must be `/discord/callback`.
+    :::
+6. Copy the `Client ID` value and paste it to the `DISCORD_CLIENT_ID` field in the `.env` file.
+7. Click on `Reset Secret` to generate a new `Client Secret`, then copy the value and paste it to the `DISCORD_CLIENT_SECRET` field.
+    :::warning
+    The value will be shown **only once**, then be permanently hidden once the page is closed or refreshed.
+    :::
+8. Done.
+
+### Database migrations
+
+Run this command in the project directory to load the database tables.
+
+```bash
+php artisan migrate
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+**Optional:** seed the tables with predetermined and/or generated data.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+```bash
+php artisan db:seed
+```
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+### Development environment
+
+**Always** have this command running while developing the app:
+
+```bash
+npm run dev
+```
+
+## Building application
+
+```bash
+npm run build
+```
