@@ -1,0 +1,46 @@
+# Write and access Routes
+
+## Executive Summary
+1. Register the route with a name in the route file.
+2. Call the function in react.
+
+## Use Case Scenarios
+1. [Links](https://inertiajs.com/docs/v3/the-basics/links)
+2. [Forms](https://inertiajs.com/docs/v3/the-basics/forms)
+3. [Manual visits](https://inertiajs.com/docs/v3/the-basics/manual-visits)
+
+## Full Tutorial
+1. Register the route in Laravel route file, giving it a **name**.
+```php title="web.php"
+Route::get('/create', [TournamentController::class,'create'])->name('create');
+```
+2. Import the function based on the name of the route, then call it.
+```tsx title="tournament-index.tsx" showLineNumbers
+import { create } from '@/routes/tournaments';
+```
+```tsx title="tournament-index.tsx" showLineNumbers=20
+<Link href={create()}>Create Tournament</Link>
+```
+:::warning
+If the route is named `delete` or `import`, the name of the function will be `deleteMethod` or `importMethod` instead.
+:::
+3. To insert a route parameter, pass it to the function.
+```tsx title="show-tournament.tsx"
+<Link href={edit(tournament.id)}>Edit</Link>
+```
+:::info
+If there are more than one parameter, use an array.
+```tsx
+update([1,2]);
+```
+:::
+4. You may retrieve the url by accessing the `.url` property.
+```tsx title="edit-tournament-form.tsx"
+// highlight-next-line
+post(store(tournament).url, {
+    onSuccess: () => { resetAndClearErrors(); }
+});
+```
+
+## Extra Materials
+1. [Laravel Wayfinder](https://github.com/laravel/wayfinder#usage)
