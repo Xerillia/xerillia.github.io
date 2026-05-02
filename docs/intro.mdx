@@ -89,10 +89,12 @@ composer install
 npm install
 ```
 :::note
-Ensure you are in the project folder, e.g. `../tournament-manager`.
+Ensure you are in the project folder, e.g. `../tournament-manager` before running the commands.
 :::
 
 ### Creating `.env`
+
+The following section is done inside the project folder.
 
 1. Duplicate the `.env.example` file in the project folder and rename it to `.env`
 
@@ -132,7 +134,7 @@ Ensure you are in the project folder, e.g. `../tournament-manager`.
 1. Click on `New Application`.
 1. Set the `Name` to anything you want, then create the app.
 1. Navigate to the `OAuth2` tab through the sidebar on the left.
-1. Click on `Add Redirect` then set it to `{APP_URL}/discord/callback`, e.g. https://project.manager-test/discord/callback.
+1. Click on `Add Redirect` then set it to `{APP_URL}/discord/callback`, e.g. http://project.manager-test/discord/callback.
     :::info
     The URI path must be `/discord/callback`.
     :::
